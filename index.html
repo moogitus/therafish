@@ -9,20 +9,129 @@
     <link rel="stylesheet" href="style.css"></link>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <title>Therafish Professional Mental Health Assessment Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Therafish - AI-Powered Mental Health Platform | Enterprise SaaS</title>
   </head>
   <style>
-    body {
-      cursor: url("https://www.freeiconspng.com/uploads/fish-icon-6.png") 64 64, auto;
-      height: 100%;
+    /* Modern SaaS Design System */
+    :root {
+      /* Primary Brand Colors - Ocean inspired but corporate */
+      --primary-blue: #0066FF;
+      --primary-dark: #0052D9;
+      --primary-light: #E6F2FF;
+      --secondary-teal: #00D4AA;
+      --accent-coral: #FF6B6B;
+      
+      /* Neutral Corporate Palette */
+      --neutral-50: #FAFBFC;
+      --neutral-100: #F4F6F8;
+      --neutral-200: #E4E7EB;
+      --neutral-300: #D1D6DB;
+      --neutral-400: #9DA4AE;
+      --neutral-500: #6B7684;
+      --neutral-600: #57606A;
+      --neutral-700: #424A53;
+      --neutral-800: #32383E;
+      --neutral-900: #1C2024;
+      
+      /* Semantic Colors */
+      --success: #10B981;
+      --warning: #F59E0B;
+      --error: #EF4444;
+      --info: #3B82F6;
+      
+      /* Typography */
+      --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      /* Shadows & Effects */
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      
+      /* Gradients */
+      --gradient-primary: linear-gradient(135deg, #0066FF 0%, #00D4AA 100%);
+      --gradient-secondary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-ocean: linear-gradient(135deg, #667eea 0%, #0066FF 50%, #00D4AA 100%);
+      
+      /* Spacing */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3rem;
+      --space-3xl: 4rem;
+      
+      /* Border Radius */
+      --radius-sm: 0.375rem;
+      --radius-base: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html {
-      cursor: url("https://www.freeiconspng.com/uploads/fish-icon-6.png") 64 64, auto;
       height: 100%;
+      scroll-behavior: smooth;
     }
-    img {
-      cursor: url("https://www.freeiconspng.com/uploads/fish-icon-6.png") 64 64, auto;
+
+    body {
+      font-family: var(--font-secondary);
+      background: linear-gradient(135deg, #0B1426 0%, #1A2332 25%, #243142 50%, #0B1426 100%);
+      color: var(--neutral-100);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background elements */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 102, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 212, 170, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(102, 126, 234, 0.08) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(-50px, -50px) rotate(0deg); }
+      50% { transform: translate(50px, 50px) rotate(180deg); }
+    }
+
+    /* Container System */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    .container-fluid {
+      max-width: 100%;
+      padding: 0 var(--space-lg);
+    }
+
+    .container-wide {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
     }
     .question-container {
       display: none;
@@ -142,54 +251,497 @@
       font-size: 18px;
     }
 
-    /* Premium Features Styling */
-    .premium-upgrade-section {
-      margin-top: 3rem;
-      text-align: center;
+        /* Modern Navigation */
+    .navbar {
+      background: rgba(11, 20, 38, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
 
-    .pricing-tiers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin: 2rem 0;
-      max-width: 1000px;
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .brand-name {
+      font-family: var(--font-primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--neutral-50);
+    }
+
+    .brand-tag {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+    }
+
+    .nav-link {
+      color: var(--neutral-300);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--neutral-50);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--neutral-600);
+      color: var(--neutral-200);
+      padding: 8px 16px;
+      border-radius: var(--radius-base);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--radius-base);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-base);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .mobile-menu-btn span {
+      width: 24px;
+      height: 2px;
+      background: var(--neutral-300);
+      transition: all 0.2s ease;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      padding: 150px 0 80px;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: rgba(0, 102, 255, 0.1);
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--primary-blue);
+      margin-bottom: var(--space-xl);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    .hero-title {
+      font-family: var(--font-primary);
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: var(--space-lg);
+      color: var(--neutral-50);
+    }
+
+    .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--neutral-300);
+      line-height: 1.6;
+      margin-bottom: var(--space-2xl);
+      max-width: 600px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    .pricing-tier {
-      background: rgba(0, 50, 100, 0.8);
-      border: 2px solid #87CEEB;
-      border-radius: 15px;
-      padding: 2rem;
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2xl);
+      margin-bottom: var(--space-3xl);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--neutral-400);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Call-to-Action Buttons */
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .btn-cta-primary {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      border-radius: var(--radius-lg);
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-cta-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-cta-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-cta-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .btn-cta-secondary {
+      background: transparent;
+      border: 2px solid var(--neutral-600);
+      color: var(--neutral-200);
+      padding: 14px 30px;
+      border-radius: var(--radius-lg);
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-cta-secondary:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Assessment Features */
+    .assessment-features {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      color: var(--neutral-300);
+      font-size: 0.9rem;
+    }
+
+    /* Section Headers */
+    .section-header {
+      text-align: center;
+      margin-bottom: var(--space-3xl);
+    }
+
+    .section-title {
+      font-family: var(--font-primary);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      color: var(--neutral-50);
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--neutral-400);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+     /* Premium Features Styling */
+    .premium-upgrade-section {
+      margin-top: var(--space-3xl);
+      padding: var(--space-3xl) 0;
+    }
+
+    .pricing-tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-xl);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-xl);
       position: relative;
       cursor: pointer;
       transition: all 0.3s ease;
+      overflow: hidden;
     }
 
-    .pricing-tier:hover {
-      transform: translateY(-5px);
-      border-color: #00d4ff;
-      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
     }
 
-    .pricing-tier.featured {
-      border-color: #ffd700;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 50, 100, 0.9));
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary-blue);
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .pricing-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary-blue);
+      box-shadow: var(--shadow-xl);
+      transform: scale(1.05);
+    }
+
+    .pricing-card.featured::before {
+      opacity: 0.08;
     }
 
     .popular-badge {
       position: absolute;
-      top: -10px;
+      top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      background: #ffd700;
-      color: #000;
-      padding: 5px 15px;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 6px 16px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .plan-header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .plan-name {
+      font-family: var(--font-primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--neutral-50);
+      margin-bottom: var(--space-xs);
+    }
+
+    .plan-description {
+      color: var(--neutral-400);
+      font-size: 0.9rem;
+    }
+
+    .plan-pricing {
+      margin-bottom: var(--space-xl);
+    }
+
+    .price-amount {
+      font-family: var(--font-primary);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      line-height: 1;
+    }
+
+    .price-period {
+      color: var(--neutral-400);
+      font-size: 0.9rem;
+      margin-left: var(--space-xs);
+    }
+
+    .plan-features {
+      margin-bottom: var(--space-xl);
+    }
+
+    .plan-features .feature-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      color: var(--neutral-200);
+    }
+
+    .feature-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--success);
+      flex-shrink: 0;
+    }
+
+    .plan-cta {
+      width: 100%;
+      padding: 14px 24px;
+      border-radius: var(--radius-lg);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      font-family: var(--font-secondary);
+    }
+
+    .plan-cta-primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .plan-cta-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .plan-cta-secondary {
+      background: transparent;
+      border: 2px solid var(--neutral-600);
+      color: var(--neutral-200);
+    }
+
+    .plan-cta-secondary:hover {
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+      background: rgba(0, 102, 255, 0.05);
     }
 
     .pricing-tier h4 {
@@ -478,9 +1030,44 @@
       font-weight: bold;
     }
 
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+      }
+    }
+
     @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-stats {
+        flex-direction: column;
+        gap: var(--space-lg);
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .assessment-features {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-md);
+      }
+      
       .pricing-tiers {
         grid-template-columns: 1fr;
+      }
+      
+      .pricing-card.featured {
+        transform: none;
       }
       
       .features-grid {
@@ -508,21 +1095,95 @@
         text-align: center;
       }
     }
+
+    @media (max-width: 480px) {
+      .hero-section {
+        padding: 120px 0 60px;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .price-amount {
+        font-size: 2.5rem;
+      }
+      
+      .nav-content {
+        height: 60px;
+      }
+      
+      .container, .container-wide {
+        padding: 0 var(--space-md);
+      }
+    }
   </style>
   <body>
+    <!-- Modern Navigation Bar -->
+    <nav class="navbar">
+      <div class="container-wide">
+        <div class="nav-content">
+          <div class="nav-brand">
+            <div class="logo">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <path d="M8 16C8 12.5 10.5 10 14 10H18C21.5 10 24 12.5 24 16C24 19.5 21.5 22 18 22H14C10.5 22 8 19.5 8 16Z" fill="url(#logoGradient)"/>
+                <path d="M20 14C20.5 14 21 14.5 21 15C21 15.5 20.5 16 20 16C19.5 16 19 15.5 19 15C19 14.5 19.5 14 20 14Z" fill="white"/>
+                <path d="M26 16L30 14V18L26 16Z" fill="url(#logoGradient)"/>
+                <defs>
+                  <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0066FF"/>
+                    <stop offset="100%" stop-color="#00D4AA"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span class="brand-name">Therafish</span>
+              <span class="brand-tag">AI</span>
+            </div>
+          </div>
+          
+          <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#enterprise" class="nav-link">Enterprise</a>
+            <a href="#resources" class="nav-link">Resources</a>
+          </div>
+          
+          <div class="nav-actions">
+            <button class="btn-ghost">Sign In</button>
+            <button class="btn-primary">Start Free Trial</button>
+          </div>
+          
+          <!-- Mobile Menu Button -->
+          <button class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
     <!-- Rotating Fish Market Ticker -->
     <div class="fish-ticker" id="fish-ticker">
       <div class="ticker-header">
         <div class="ticker-branding">
           <span class="ticker-logo">🐟 TFSE</span>
           <span class="ticker-subtitle">Therapeutic Fish Stock Exchange</span>
-        </div>
+    </div>
         <div class="market-info">
           <span class="market-status live">● LIVE</span>
           <span class="market-time" id="market-time">EST 9:30 AM - 4:00 PM</span>
           <span class="tfse-index">TFSE: <span id="tfse-index-mini">1,847.25</span> <span class="index-change positive" id="index-change-mini">+24.8</span></span>
-        </div>
-      </div>
+    </div> 
+    </div>
       
       <div class="ticker-content" id="ticker-content">
         <div class="ticker-scroll" id="ticker-scroll">
@@ -676,9 +1337,35 @@
     <div id="start-screen" class="start-screen">
       <div class="container">
         <header class="hero-section">
-          <h1>Therafish Professional Assessment Platform</h1>
-          <h3>Evidence-based mental health screening powered by clinical protocols</h3>
-          <p>Our comprehensive assessment uses validated psychiatric instruments to provide insights into your mental wellness journey.</p>
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="badge-icon">🚀</span>
+              <span>Trusted by 10,000+ healthcare professionals</span>
+            </div>
+            <h1 class="hero-title">
+              AI-Powered Mental Health 
+              <span class="gradient-text">Assessment Platform</span>
+            </h1>
+            <p class="hero-subtitle">
+              Enterprise-grade mental health screening with real-time analytics, 
+              biometric integration, and seamless EHR connectivity. 
+              Built for scale, designed for impact.
+            </p>
+            <div class="hero-stats">
+              <div class="stat">
+                <span class="stat-number">99.7%</span>
+                <span class="stat-label">Uptime SLA</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">5M+</span>
+                <span class="stat-label">Assessments Completed</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">SOC 2</span>
+                <span class="stat-label">Type II Certified</span>
+              </div>
+            </div>
+          </div>
         </header>
         
                  <div class="disclaimer card">
@@ -705,49 +1392,169 @@
         </div>
         
         <div class="action-section">
-          <button class="btn btn-primary" onclick="startAssessment()" id="start-btn">
-            <span>Begin Professional Assessment</span>
-            <span class="btn-icon">→</span>
-          </button>
-          <p class="assessment-info">
-            <strong>Assessment Details:</strong> 15 questions • 5-10 minutes • Confidential • Professional-grade scoring
-          </p>
+          <div class="cta-buttons">
+            <button class="btn-cta-primary" onclick="startAssessment()" id="start-btn">
+              <span class="btn-text">Start Free Assessment</span>
+              <span class="btn-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4.5 10h11m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+            <button class="btn-cta-secondary" onclick="therafishPremium.upgradeSubscription('clinical')">
+              <span class="btn-text">Book Enterprise Demo</span>
+              <span class="btn-icon">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+          
+          <div class="assessment-features">
+            <div class="feature-item">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13.5 8a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z" fill="var(--success)"/>
+                <path d="M6.5 8l1.5 1.5L11.5 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>HIPAA Compliant</span>
+            </div>
+            <div class="feature-item">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13.5 8a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z" fill="var(--success)"/>
+                <path d="M6.5 8l1.5 1.5L11.5 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>FDA Validated Protocols</span>
+            </div>
+            <div class="feature-item">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13.5 8a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z" fill="var(--success)"/>
+                <path d="M6.5 8l1.5 1.5L11.5 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Real-time Analytics</span>
+            </div>
+            <div class="feature-item">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M13.5 8a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z" fill="var(--success)"/>
+                <path d="M6.5 8l1.5 1.5L11.5 6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>5-10 minutes • Enterprise-ready</span>
+            </div>
+          </div>
           
           <!-- Premium Upgrade Section -->
-          <div class="premium-upgrade-section">
-            <h3>🚀 Unlock Premium Features</h3>
+          <div class="premium-upgrade-section" id="pricing">
+            <div class="section-header">
+              <h2 class="section-title">
+                Choose Your <span class="gradient-text">Success Plan</span>
+              </h2>
+              <p class="section-subtitle">
+                Scalable solutions for healthcare organizations of all sizes. 
+                Start free, upgrade when you're ready to scale.
+              </p>
+            </div>
             <div class="pricing-tiers">
-              <div class="pricing-tier" onclick="therafishPremium.upgradeSubscription('premium')">
-                <h4>Premium</h4>
-                <div class="price">$29.99/mo</div>
-                <ul class="feature-list">
-                  <li>✓ AI Mood Prediction</li>
-                  <li>✓ Advanced Analytics</li>
-                  <li>✓ Unlimited Assessments</li>
-                </ul>
-                <button class="btn btn-secondary">Start Free Trial</button>
+              <div class="pricing-card" onclick="therafishPremium.upgradeSubscription('premium')">
+                <div class="plan-header">
+                  <h3 class="plan-name">Premium</h3>
+                  <p class="plan-description">Perfect for small practices</p>
+                </div>
+                <div class="plan-pricing">
+                  <span class="price-amount">$29</span>
+                  <span class="price-period">per month</span>
+                </div>
+                <div class="plan-features">
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>AI Mood Prediction</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Advanced Analytics</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Unlimited Assessments</span>
+                  </div>
+                </div>
+                <button class="plan-cta plan-cta-secondary">Start Free Trial</button>
               </div>
-              <div class="pricing-tier featured" onclick="therafishPremium.upgradeSubscription('clinical')">
+              
+              <div class="pricing-card featured" onclick="therafishPremium.upgradeSubscription('clinical')">
                 <div class="popular-badge">Most Popular</div>
-                <h4>Clinical Pro</h4>
-                <div class="price">$199.99/mo</div>
-                <ul class="feature-list">
-                  <li>✓ Everything in Premium</li>
-                  <li>✓ Telehealth Integration</li>
-                  <li>✓ Insurance Billing</li>
-                  <li>✓ Biometric Monitoring</li>
-                </ul>
-                <button class="btn btn-primary">Start Free Trial</button>
+                <div class="plan-header">
+                  <h3 class="plan-name">Clinical Pro</h3>
+                  <p class="plan-description">For healthcare organizations</p>
+                </div>
+                <div class="plan-pricing">
+                  <span class="price-amount">$199</span>
+                  <span class="price-period">per month</span>
+                </div>
+                <div class="plan-features">
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Everything in Premium</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Telehealth Integration</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Insurance Billing</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Biometric Monitoring</span>
+                  </div>
+                </div>
+                <button class="plan-cta plan-cta-primary">Start Free Trial</button>
               </div>
-              <div class="pricing-tier" onclick="therafishPremium.upgradeSubscription('enterprise')">
-                <h4>Enterprise</h4>
-                <div class="price">$99.99/mo</div>
-                <ul class="feature-list">
-                  <li>✓ Multi-User Management</li>
-                  <li>✓ Custom Branding</li>
-                  <li>✓ API Access</li>
-                </ul>
-                <button class="btn btn-secondary">Contact Sales</button>
+              
+              <div class="pricing-card" onclick="therafishPremium.upgradeSubscription('enterprise')">
+                <div class="plan-header">
+                  <h3 class="plan-name">Enterprise</h3>
+                  <p class="plan-description">For large health systems</p>
+                </div>
+                <div class="plan-pricing">
+                  <span class="price-amount">Custom</span>
+                  <span class="price-period">pricing</span>
+                </div>
+                <div class="plan-features">
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Multi-User Management</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Custom Branding</span>
+                  </div>
+                  <div class="feature-item">
+                    <svg class="feature-icon" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>API Access & SSO</span>
+                  </div>
+                </div>
+                <button class="plan-cta plan-cta-secondary">Contact Sales</button>
               </div>
             </div>
           </div>
