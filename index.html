@@ -386,8 +386,8 @@
           <button id="skip-btn" onclick="skipQuestion()" class="btn btn-secondary" style="display: none;">
             <span>Skip Question</span>
           </button>
-          <button id="next-btn" onclick="nextQuestion()" class="btn btn-primary" style="display: none;">
-            <span>Next →</span>
+          <button id="next-btn" onclick="nextQuestion()" class="btn btn-primary disabled" disabled>
+            <span>⚪ Select an answer to continue →</span>
           </button>
         </nav>
       </div>
@@ -752,9 +752,31 @@
         }
 
         updateNavigation(index) {
-          document.getElementById('prev-btn').style.display = index > 0 ? 'block' : 'none';
-          document.getElementById('skip-btn').style.display = 'block';
-          document.getElementById('next-btn').style.display = this.responses[index] ? 'block' : 'none';
+          const prevBtn = document.getElementById('prev-btn');
+          const skipBtn = document.getElementById('skip-btn');
+          const nextBtn = document.getElementById('next-btn');
+          
+          // Show/hide Previous button
+          prevBtn.style.display = index > 0 ? 'block' : 'none';
+          
+          // Always show Skip button
+          skipBtn.style.display = 'block';
+          
+          // Always show Next button but enable/disable based on response
+          nextBtn.style.display = 'block';
+          if (this.responses[index]) {
+            nextBtn.disabled = false;
+            nextBtn.classList.remove('disabled');
+            nextBtn.innerHTML = '<span>Next →</span>';
+          } else {
+            nextBtn.disabled = true;
+            nextBtn.classList.add('disabled');
+            // Show shorter text on mobile devices with helpful messaging
+            const isMobile = window.innerWidth <= 768;
+            nextBtn.innerHTML = isMobile ? 
+              '<span>⚪ Select answer first</span>' : 
+              '<span>⚪ Select an answer to continue →</span>';
+          }
         }
 
         updateSpeechBubble(message) {

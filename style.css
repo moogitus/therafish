@@ -764,10 +764,20 @@ p {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.nav-buttons .btn:disabled {
-  opacity: 0.5;
+.nav-buttons .btn:disabled,
+.nav-buttons .btn.disabled {
+  opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
+  background: var(--neutral-600);
+  color: var(--neutral-400);
+  border-color: var(--neutral-600);
+}
+
+.nav-buttons .btn:disabled:hover,
+.nav-buttons .btn.disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .nav-buttons .btn[style*="display: none"] + .btn,
@@ -783,6 +793,24 @@ p {
     box-shadow: 0 8px 25px -5px rgba(59, 130, 246, 0.4);
     transform: translateY(-2px);
   }
+}
+
+@keyframes buttonEnable {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.nav-buttons .btn:not(.disabled):not(:disabled) {
+  animation: buttonEnable 0.5s ease-out;
 }
 
 /* Footer */
