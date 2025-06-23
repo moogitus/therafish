@@ -380,6 +380,9 @@
         <main id="questions-container" class="questions-container" role="main"></main>
         
         <nav class="nav-buttons" role="navigation">
+          <button id="home-btn" onclick="goHome()" class="btn btn-secondary">
+            <span>🏠 Home</span>
+          </button>
           <button id="prev-btn" onclick="previousQuestion()" class="btn btn-secondary" style="display: none;">
             <span>← Previous</span>
           </button>
@@ -420,6 +423,9 @@
         <main id="results-content" class="results-content" role="main"></main>
         
         <div class="results-actions">
+          <button class="btn btn-secondary" onclick="goHome()">
+            <span>🏠 Home</span>
+          </button>
           <button class="btn btn-primary" onclick="generateReport()">
             <span>Generate PDF Report</span>
           </button>
@@ -680,12 +686,12 @@
           // Calculate running scores
           this.updateScores();
           
-          // Update navigation to show Next button now that an answer is selected
-          this.updateNavigation(questionIndex);
+          // Update navigation - use current question to ensure consistency
+          this.updateNavigation(this.currentQuestion);
           
           // Auto-advance after brief delay (but allow manual next button use)
           this.autoAdvanceTimeout = setTimeout(() => {
-            if (questionIndex < this.questions.length - 1) {
+            if (this.currentQuestion < this.questions.length - 1) {
               this.currentQuestion++;
               this.showQuestion(this.currentQuestion);
             } else {
@@ -734,7 +740,7 @@
           } else {
             if (rawScore >= categorycutoffs.severe) severity = 'severe';
             else if (rawScore >= categorycutoffs.moderate) severity = 'moderate';
-            else if (rawScore >= categoryCutoffs.mild) severity = 'mild';
+            else if (rawScore >= categorycutoffs.mild) severity = 'mild';
             else severity = 'minimal';
           }
           
@@ -756,18 +762,29 @@
           const skipBtn = document.getElementById('skip-btn');
           const nextBtn = document.getElementById('next-btn');
           
+          if (!nextBtn) {
+            console.error('Next button not found!');
+            return;
+          }
+          
           // Show/hide Previous button
-          prevBtn.style.display = index > 0 ? 'block' : 'none';
+          if (prevBtn) prevBtn.style.display = index > 0 ? 'block' : 'none';
           
           // Always show Skip button
-          skipBtn.style.display = 'block';
+          if (skipBtn) skipBtn.style.display = 'block';
           
           // Always show Next button but enable/disable based on response
           nextBtn.style.display = 'block';
-          if (this.responses[index]) {
+          
+          // Check if there's a response for this question
+          const hasResponse = this.responses[index] && this.responses[index] !== null;
+          console.log(`Updating navigation for question ${index}, hasResponse: ${hasResponse}`, this.responses[index]);
+          
+          if (hasResponse) {
             nextBtn.disabled = false;
             nextBtn.classList.remove('disabled');
             nextBtn.innerHTML = '<span>Next →</span>';
+            console.log('Next button enabled');
           } else {
             nextBtn.disabled = true;
             nextBtn.classList.add('disabled');
@@ -776,6 +793,7 @@
             nextBtn.innerHTML = isMobile ? 
               '<span>⚪ Select answer first</span>' : 
               '<span>⚪ Select an answer to continue →</span>';
+            console.log('Next button disabled');
           }
         }
 
@@ -948,6 +966,29 @@
           document.getElementById('results-container').style.display = 'none';
           document.getElementById('start-screen').style.display = 'block';
         }
+
+        goHome() {
+          // Clear any auto-advance timeout
+          if (this.autoAdvanceTimeout) {
+            clearTimeout(this.autoAdvanceTimeout);
+            this.autoAdvanceTimeout = null;
+          }
+          
+          // Reset to initial state but keep session data for potential resume
+          this.currentQuestion = 0;
+          
+          // Hide all screens except start screen
+          document.getElementById('assessment-container').style.display = 'none';
+          document.getElementById('results-container').style.display = 'none';
+          document.getElementById('start-screen').style.display = 'block';
+          
+          // Update speech bubble back to welcome message
+          const bubble = document.getElementById('speech-bubble');
+          if (bubble) {
+            bubble.textContent = "Welcome to your professional mental health assessment. I'm Therafish, your clinical guide through this evidence-based evaluation.";
+            bubble.style.display = 'block';
+          }
+        }
       }
 
              // Initialize the assessment system
@@ -983,6 +1024,10 @@
 
       function restartAssessment() {
         assessment.restartAssessment();
+      }
+
+      function goHome() {
+        assessment.goHome();
       }
 
                                          // Real Fish Market Data Integration

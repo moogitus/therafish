@@ -758,6 +758,7 @@ p {
   justify-content: center;
   gap: 1rem;
   margin: 2rem 0;
+  flex-wrap: wrap;
 }
 
 .nav-buttons .btn {
@@ -991,6 +992,23 @@ footer {
   user-select: none;
 }
 
+/* Navigation Button Order */
+#home-btn {
+  order: 1;
+}
+
+#prev-btn {
+  order: 2;
+}
+
+#skip-btn {
+  order: 3;
+}
+
+#next-btn {
+  order: 4;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
@@ -1008,9 +1026,10 @@ footer {
   }
   
   .nav-buttons {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
   }
   
   .nav-buttons .btn {
@@ -1024,6 +1043,12 @@ footer {
   .results-actions {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+  }
+  
+  .results-actions .btn {
+    min-width: 200px;
+    max-width: 90vw;
   }
   
   .assessment-metadata {
