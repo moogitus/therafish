@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Professional mental health screening tool powered by evidence-based assessment protocols">
+    <meta name="keywords" content="mental health, depression screening, anxiety assessment, psychological evaluation">
+    <link rel="stylesheet" href="style.css"></link>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Therafish Professional Mental Health Assessment Platform</title>
+  </head>
+  <style>
+    body {
+      cursor: url("https://www.freeiconspng.com/uploads/fish-icon-6.png") 64 64, auto;
+      height: 100%;
+    }
+    html {
+      cursor: url("https://www.freeiconspng.com/uploads/fish-icon-6.png") 64 64, auto;
+      height: 100%;
+    }
+    img {
+      cursor: url("https://www.freeiconspng.com/uploads/fish-icon-6.png") 64 64, auto;
+    }
+    .question-container {
+      display: none;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(0, 50, 100, 0.8);
+      border-radius: 15px;
+      border: 3px solid white;
+    }
+    .question-container.active {
+      display: block;
+    }
+    .question {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #87CEEB;
+    }
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .answer-btn {
+      padding: 15px;
+      font-size: 20px;
+      font-family: "Comic Sans MS", cursive;
+      background: rgba(135, 206, 235, 0.3);
+      color: white;
+      border: 2px solid #87CEEB;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .answer-btn:hover {
+      background: rgba(135, 206, 235, 0.6);
+      transform: scale(1.02);
+    }
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #87CEEB, #4682B4);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    .results-container {
+      display: none;
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 30px;
+      background: rgba(0, 50, 100, 0.9);
+      border-radius: 15px;
+      border: 3px solid white;
+    }
+    .start-screen {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .start-btn {
+      padding: 20px 40px;
+      font-size: 24px;
+      font-family: "Comic Sans MS", cursive;
+      background: #4682B4;
+      color: white;
+      border: 3px solid white;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 20px;
+      transition: all 0.3s ease;
+    }
+    .start-btn:hover {
+      background: #87CEEB;
+      transform: scale(1.05);
+    }
+    .therafish-container {
+      position: relative;
+      display: inline-block;
+    }
+    .speech-bubble {
+      position: absolute;
+      background: white;
+      color: #333;
+      padding: 15px;
+      border-radius: 20px;
+      border: 3px solid #4682B4;
+      font-size: 18px;
+      width: 250px;
+      top: -80px;
+      left: -120px;
+      text-align: center;
+      display: none;
+    }
+    .speech-bubble:after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 10px solid transparent;
+      border-top-color: white;
+    }
+    .disclaimer {
+      background: rgba(255, 255, 0, 0.2);
+      border: 2px solid yellow;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+  </style>
+  <body>
+    <!-- Rotating Fish Market Ticker -->
+    <div class="fish-ticker" id="fish-ticker">
+      <div class="ticker-header">
+        <div class="ticker-branding">
+          <span class="ticker-logo">🐟 TFSE</span>
+          <span class="ticker-subtitle">Therapeutic Fish Stock Exchange</span>
+        </div>
+        <div class="market-info">
+          <span class="market-status live">● LIVE</span>
+          <span class="market-time" id="market-time">EST 9:30 AM - 4:00 PM</span>
+          <span class="tfse-index">TFSE: <span id="tfse-index-mini">1,847.25</span> <span class="index-change positive" id="index-change-mini">+24.8</span></span>
+        </div>
+      </div>
+      
+      <div class="ticker-content" id="ticker-content">
+        <div class="ticker-scroll" id="ticker-scroll">
+          <!-- First set of tiles -->
+          <div class="ticker-tile" data-symbol="SALM">
+            <div class="tile-header">
+              <span class="symbol">SALM</span>
+              <span class="volume">Vol: 2.4M</span>
+            </div>
+            <div class="tile-name">Atlantic Salmon</div>
+            <div class="tile-subtitle">Therapeutic Grade</div>
+            <div class="tile-price">$12.85</div>
+            <div class="tile-change positive">+$0.24 (+1.90%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="TCOD">
+            <div class="tile-header">
+              <span class="symbol">TCOD</span>
+              <span class="volume">Vol: 1.8M</span>
+            </div>
+            <div class="tile-name">Pacific Cod</div>
+            <div class="tile-subtitle">Anxiety Relief</div>
+            <div class="tile-price">$8.42</div>
+            <div class="tile-change negative">-$0.18 (-2.09%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="MMAC">
+            <div class="tile-header">
+              <span class="symbol">MMAC</span>
+              <span class="volume">Vol: 3.1M</span>
+            </div>
+            <div class="tile-name">Atlantic Mackerel</div>
+            <div class="tile-subtitle">Mindfulness</div>
+            <div class="tile-price">$15.67</div>
+            <div class="tile-change positive">+$0.45 (+2.96%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="YFTUNA">
+            <div class="tile-header">
+              <span class="symbol">YFTUNA</span>
+              <span class="volume">Vol: 4.7M</span>
+            </div>
+            <div class="tile-name">Yellowfin Tuna</div>
+            <div class="tile-subtitle">Premium Therapy</div>
+            <div class="tile-price">$18.33</div>
+            <div class="tile-change positive">+$0.67 (+3.79%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="HALI">
+            <div class="tile-header">
+              <span class="symbol">HALI</span>
+              <span class="volume">Vol: 1.2M</span>
+            </div>
+            <div class="tile-name">Pacific Halibut</div>
+            <div class="tile-subtitle">Stress Relief</div>
+            <div class="tile-price">$24.12</div>
+            <div class="tile-change negative">-$0.88 (-3.52%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="RTRT">
+            <div class="tile-header">
+              <span class="symbol">RTRT</span>
+              <span class="volume">Vol: 900K</span>
+            </div>
+            <div class="tile-name">Rainbow Trout</div>
+            <div class="tile-subtitle">Organic</div>
+            <div class="tile-price">$11.45</div>
+            <div class="tile-change positive">+$0.15 (+1.33%)</div>
+          </div>
+          
+          <!-- Duplicate set for seamless loop -->
+          <div class="ticker-tile" data-symbol="SALM">
+            <div class="tile-header">
+              <span class="symbol">SALM</span>
+              <span class="volume">Vol: 2.4M</span>
+            </div>
+            <div class="tile-name">Atlantic Salmon</div>
+            <div class="tile-subtitle">Therapeutic Grade</div>
+            <div class="tile-price">$12.85</div>
+            <div class="tile-change positive">+$0.24 (+1.90%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="TCOD">
+            <div class="tile-header">
+              <span class="symbol">TCOD</span>
+              <span class="volume">Vol: 1.8M</span>
+            </div>
+            <div class="tile-name">Pacific Cod</div>
+            <div class="tile-subtitle">Anxiety Relief</div>
+            <div class="tile-price">$8.42</div>
+            <div class="tile-change negative">-$0.18 (-2.09%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="MMAC">
+            <div class="tile-header">
+              <span class="symbol">MMAC</span>
+              <span class="volume">Vol: 3.1M</span>
+            </div>
+            <div class="tile-name">Atlantic Mackerel</div>
+            <div class="tile-subtitle">Mindfulness</div>
+            <div class="tile-price">$15.67</div>
+            <div class="tile-change positive">+$0.45 (+2.96%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="YFTUNA">
+            <div class="tile-header">
+              <span class="symbol">YFTUNA</span>
+              <span class="volume">Vol: 4.7M</span>
+            </div>
+            <div class="tile-name">Yellowfin Tuna</div>
+            <div class="tile-subtitle">Premium Therapy</div>
+            <div class="tile-price">$18.33</div>
+            <div class="tile-change positive">+$0.67 (+3.79%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="HALI">
+            <div class="tile-header">
+              <span class="symbol">HALI</span>
+              <span class="volume">Vol: 1.2M</span>
+            </div>
+            <div class="tile-name">Pacific Halibut</div>
+            <div class="tile-subtitle">Stress Relief</div>
+            <div class="tile-price">$24.12</div>
+            <div class="tile-change negative">-$0.88 (-3.52%)</div>
+          </div>
+          
+          <div class="ticker-tile" data-symbol="RTRT">
+            <div class="tile-header">
+              <span class="symbol">RTRT</span>
+              <span class="volume">Vol: 900K</span>
+            </div>
+            <div class="tile-name">Rainbow Trout</div>
+            <div class="tile-subtitle">Organic</div>
+            <div class="tile-price">$11.45</div>
+            <div class="tile-change positive">+$0.15 (+1.33%)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h2>Initializing Therafish Assessment Platform...</h2>
+        <p>Preparing your personalized mental wellness evaluation</p>
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="start-screen">
+      <div class="container">
+        <header class="hero-section">
+          <h1>Therafish Professional Assessment Platform</h1>
+          <h3>Evidence-based mental health screening powered by clinical protocols</h3>
+          <p>Our comprehensive assessment uses validated psychiatric instruments to provide insights into your mental wellness journey.</p>
+        </header>
+        
+                 <div class="disclaimer card">
+           <h4>⚠️ Professional Disclaimer</h4>
+           <p>This assessment is designed for informational purposes and initial screening only. It does not constitute a medical diagnosis, treatment recommendation, or substitute for professional mental health care. Results should be discussed with a qualified healthcare provider.</p>
+           <div class="ethical-sourcing">
+             <p><strong>🌊 Ethically Sourced:</strong> All Therafish are sustainably harvested from pristine ocean waters using traditional, eco-friendly methods. No factory farming or artificial breeding facilities are used in our therapeutic fish procurement process.</p>
+           </div>
+           <div class="compliance-info">
+             <small>HIPAA Compliant • Evidence-Based • Clinically Validated • Ocean-to-Therapy Certified</small>
+           </div>
+         </div>
+        
+        <div class="therafish-container">
+          <img src="https://www.meme-arsenal.com/memes/a40033430253efd06b9caade5c052bbf.jpg" 
+               alt="Therafish Clinical Assistant" 
+               width="400" 
+               class="therafish-img"
+               loading="lazy"/>
+          <div class="speech-bubble" id="speech-bubble">
+            Welcome to your professional mental health assessment. I'm Therafish, your clinical guide through this evidence-based evaluation.
+          </div>
+          <div id="blub" aria-hidden="true">blub blub</div>
+        </div>
+        
+        <div class="action-section">
+          <button class="btn btn-primary" onclick="startAssessment()" id="start-btn">
+            <span>Begin Professional Assessment</span>
+            <span class="btn-icon">→</span>
+          </button>
+          <p class="assessment-info">
+            <strong>Assessment Details:</strong> 15 questions • 5-10 minutes • Confidential • Professional-grade scoring
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assessment Container -->
+    <div id="assessment-container" class="assessment-container" style="display: none;">
+      <div class="container">
+        <header class="assessment-header">
+          <h1>Clinical Assessment in Progress</h1>
+          <div class="progress-container">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text">
+              <span id="current-question">1</span> of <span id="total-questions">15</span> questions
+            </div>
+          </div>
+        </header>
+        
+        <div class="therafish-guide">
+          <div class="therafish-container">
+            <img src="https://www.meme-arsenal.com/memes/a40033430253efd06b9caade5c052bbf.jpg" 
+                 alt="Therafish Clinical Guide" 
+                 width="250" 
+                 class="therafish-img"/>
+            <div class="speech-bubble" id="assessment-speech">
+              Let's begin with your first clinical question...
+            </div>
+            <div id="blub" aria-hidden="true">blub blub</div>
+          </div>
+        </div>
+
+        <main id="questions-container" class="questions-container" role="main"></main>
+        
+        <nav class="nav-buttons" role="navigation">
+          <button id="prev-btn" onclick="previousQuestion()" class="btn btn-secondary" style="display: none;">
+            <span>← Previous</span>
+          </button>
+          <button id="skip-btn" onclick="skipQuestion()" class="btn btn-secondary" style="display: none;">
+            <span>Skip Question</span>
+          </button>
+          <button id="next-btn" onclick="nextQuestion()" class="btn btn-primary" style="display: none;">
+            <span>Next →</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Results Container -->
+    <div id="results-container" class="results-container" style="display: none;">
+      <div class="container">
+        <header class="results-header">
+          <h1>Your Professional Assessment Results</h1>
+          <div class="assessment-metadata">
+            <span class="completion-time">Completed: <time id="completion-time"></time></span>
+            <span class="assessment-id">Assessment ID: <span id="session-id"></span></span>
+          </div>
+        </header>
+        
+        <div class="therafish-results">
+          <div class="therafish-container">
+            <img src="https://www.meme-arsenal.com/memes/a40033430253efd06b9caade5c052bbf.jpg" 
+                 alt="Therafish Results Guide" 
+                 width="300" 
+                 class="therafish-img"/>
+            <div class="speech-bubble" id="results-speech">
+              Based on your responses, here's your comprehensive mental wellness profile...
+            </div>
+            <div id="blub" aria-hidden="true">blub blub</div>
+          </div>
+        </div>
+
+        <main id="results-content" class="results-content" role="main"></main>
+        
+        <div class="results-actions">
+          <button class="btn btn-primary" onclick="generateReport()">
+            <span>Generate PDF Report</span>
+          </button>
+          <button class="btn btn-secondary" onclick="restartAssessment()">
+            <span>Retake Assessment</span>
+          </button>
+          <button class="btn btn-secondary" onclick="shareResults()">
+            <span>Share with Provider</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+                     <div class="footer-info">
+             <p>Therafish Professional Mental Health Assessment Platform</p>
+             <p>Developed by: Ryan Divan, Daniel Santos, Michael Russo-Alesi, Raghav Patil, and Ellis Fertig</p>
+           </div>
+          <div class="footer-compliance">
+            <span>HIPAA Compliant</span>
+            <span>Evidence-Based</span>
+            <span>Clinically Validated</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Industrial-Grade Mental Health Assessment System
+      class TherafishAssessment {
+        constructor() {
+          this.questions = this.initializeQuestions();
+          this.currentQuestion = 0;
+          this.responses = [];
+          this.scores = {
+            depression: { raw: 0, percentile: 0, severity: 'minimal' },
+            anxiety: { raw: 0, percentile: 0, severity: 'minimal' },
+            stress: { raw: 0, percentile: 0, severity: 'minimal' },
+            wellbeing: { raw: 0, percentile: 0, level: 'high' }
+          };
+          this.sessionId = this.generateSessionId();
+          this.startTime = new Date();
+          this.validationErrors = [];
+          this.init();
+        }
+
+        initializeQuestions() {
+          return [
+            {
+              id: 'phq9_1',
+              category: 'depression',
+              text: "Over the past two weeks, how often have you been bothered by little interest or pleasure in doing things?",
+              type: "likert",
+              scale: "frequency",
+              required: true,
+              answers: [
+                { text: "Not at all", value: 0, clinical_weight: 1.0 },
+                { text: "Several days", value: 1, clinical_weight: 1.2 },
+                { text: "More than half the days", value: 2, clinical_weight: 1.5 },
+                { text: "Nearly every day", value: 3, clinical_weight: 2.0 }
+              ]
+            },
+            {
+              id: 'phq9_2',
+              category: 'depression',
+              text: "Over the past two weeks, how often have you been bothered by feeling down, depressed, or hopeless?",
+              type: "likert",
+              scale: "frequency",
+              required: true,
+              answers: [
+                { text: "Not at all", value: 0, clinical_weight: 1.0 },
+                { text: "Several days", value: 1, clinical_weight: 1.2 },
+                { text: "More than half the days", value: 2, clinical_weight: 1.5 },
+                { text: "Nearly every day", value: 3, clinical_weight: 2.0 }
+              ]
+            },
+            {
+              id: 'gad7_1',
+              category: 'anxiety',
+              text: "Over the past two weeks, how often have you been bothered by feeling nervous, anxious, or on edge?",
+              type: "likert",
+              scale: "frequency", 
+              required: true,
+              answers: [
+                { text: "Not at all", value: 0, clinical_weight: 1.0 },
+                { text: "Several days", value: 1, clinical_weight: 1.2 },
+                { text: "More than half the days", value: 2, clinical_weight: 1.5 },
+                { text: "Nearly every day", value: 3, clinical_weight: 2.0 }
+              ]
+            },
+            {
+              id: 'gad7_2',
+              category: 'anxiety',
+              text: "Over the past two weeks, how often have you been bothered by not being able to stop or control worrying?",
+              type: "likert",
+              scale: "frequency",
+              required: true,
+              answers: [
+                { text: "Not at all", value: 0, clinical_weight: 1.0 },
+                { text: "Several days", value: 1, clinical_weight: 1.2 },
+                { text: "More than half the days", value: 2, clinical_weight: 1.5 },
+                { text: "Nearly every day", value: 3, clinical_weight: 2.0 }
+              ]
+            },
+            {
+              id: 'sleep_1',
+              category: 'general',
+              text: "How would you rate your sleep quality over the past month?",
+              type: "likert",
+              scale: "quality",
+              required: true,
+              answers: [
+                { text: "Very good", value: 0, clinical_weight: 1.0 },
+                { text: "Fairly good", value: 1, clinical_weight: 1.1 },
+                { text: "Fairly bad", value: 2, clinical_weight: 1.4 },
+                { text: "Very bad", value: 3, clinical_weight: 1.8 }
+              ]
+            }
+            // Additional questions would continue here...
+          ];
+        }
+
+        generateSessionId() {
+          return 'TF-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 9);
+        }
+
+        init() {
+          this.hideLoadingScreen();
+          this.setupEventListeners();
+          this.updateTotalQuestions();
+        }
+
+        hideLoadingScreen() {
+          setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+          }, 2000);
+        }
+
+        setupEventListeners() {
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') this.previousQuestion();
+            if (e.key === 'ArrowRight') this.nextQuestion();
+            if (e.key >= '1' && e.key <= '4') this.selectAnswer(parseInt(e.key) - 1);
+          });
+
+          // Auto-save responses
+          setInterval(() => {
+            this.saveProgress();
+          }, 30000);
+        }
+
+        updateTotalQuestions() {
+          document.getElementById('total-questions').textContent = this.questions.length;
+        }
+
+        startAssessment() {
+          document.getElementById('start-screen').style.display = 'none';
+          document.getElementById('assessment-container').style.display = 'block';
+          this.showQuestion(0);
+          this.updateSpeechBubble("Let's begin your professional assessment. Take your time with each question.");
+        }
+
+        showQuestion(index) {
+          const container = document.getElementById('questions-container');
+          const question = this.questions[index];
+          
+          // Update progress
+          const progress = ((index) / this.questions.length) * 100;
+          document.getElementById('progress-fill').style.width = progress + '%';
+          document.querySelector('.progress-bar').setAttribute('aria-valuenow', progress);
+          document.getElementById('current-question').textContent = index + 1;
+          
+          // Update speech bubble with contextual guidance
+          this.updateSpeechBubble(this.getContextualGuidance(question.category, index));
+          
+          // Render question
+          container.innerHTML = `
+            <div class="question-container card active" role="group" aria-labelledby="question-${index}">
+              <div class="question-header">
+                <h2 id="question-${index}" class="question-text">${index + 1}. ${question.text}</h2>
+                <div class="question-meta">
+                  <span class="category-tag">${question.category.toUpperCase()}</span>
+                  ${question.required ? '<span class="required-tag">Required</span>' : ''}
+                </div>
+              </div>
+              <div class="answers" role="radiogroup" aria-labelledby="question-${index}">
+                ${question.answers.map((answer, i) => 
+                  `<button class="answer-btn" 
+                           role="radio" 
+                           aria-checked="false"
+                           onclick="window.assessment.selectAnswer(${index}, ${i})"
+                           data-value="${answer.value}"
+                           id="answer-${index}-${i}">
+                     <span class="answer-text">${answer.text}</span>
+                     <span class="answer-indicator">●</span>
+                   </button>`
+                ).join('')}
+              </div>
+            </div>
+          `;
+
+          // Update navigation
+          this.updateNavigation(index);
+          
+          // Focus management for accessibility
+          setTimeout(() => {
+            document.getElementById(`question-${index}`).focus();
+          }, 100);
+        }
+
+        getContextualGuidance(category, index) {
+          const guidance = {
+            depression: [
+              "Let's explore your mood and emotional state over the past two weeks.",
+              "These questions help assess patterns of depression symptoms.",
+              "Remember, there are no right or wrong answers - just honest responses."
+            ],
+            anxiety: [
+              "Now we'll examine anxiety-related experiences you may have had.",
+              "Anxiety manifests differently for everyone - share your experience.",
+              "These questions are based on clinical anxiety assessment tools."
+            ],
+            general: [
+              "Let's look at some general wellness indicators.",
+              "Overall health factors contribute to mental wellness.",
+              "These questions provide additional context for your assessment."
+            ]
+          };
+          
+          const categoryGuidance = guidance[category] || guidance.general;
+          return categoryGuidance[index % categoryGuidance.length];
+        }
+
+        selectAnswer(questionIndex, answerIndex) {
+          const question = this.questions[questionIndex];
+          const answer = question.answers[answerIndex];
+          
+          // Store response with metadata
+          this.responses[questionIndex] = {
+            questionId: question.id,
+            answerIndex: answerIndex,
+            value: answer.value,
+            timestamp: new Date(),
+            category: question.category,
+            clinicalWeight: answer.clinical_weight
+          };
+          
+          // Update UI
+          document.querySelectorAll('.answer-btn').forEach((btn, i) => {
+            btn.classList.toggle('selected', i === answerIndex);
+            btn.setAttribute('aria-checked', i === answerIndex ? 'true' : 'false');
+          });
+          
+          // Calculate running scores
+          this.updateScores();
+          
+          // Auto-advance after brief delay
+          setTimeout(() => {
+            if (questionIndex < this.questions.length - 1) {
+              this.currentQuestion++;
+              this.showQuestion(this.currentQuestion);
+            } else {
+              this.completeAssessment();
+            }
+          }, 800);
+        }
+
+        updateScores() {
+          // Reset scores
+          Object.keys(this.scores).forEach(key => {
+            this.scores[key].raw = 0;
+          });
+          
+          // Calculate weighted scores
+          this.responses.forEach(response => {
+            if (response) {
+              const weightedScore = response.value * response.clinicalWeight;
+              this.scores[response.category].raw += weightedScore;
+            }
+          });
+          
+          // Calculate percentiles and severity levels
+          Object.keys(this.scores).forEach(category => {
+            this.scores[category] = this.calculateSeverityLevel(category, this.scores[category].raw);
+          });
+        }
+
+        calculateSeverityLevel(category, rawScore) {
+          // Clinical cutoff points based on validated instruments
+          const cutoffs = {
+            depression: { minimal: 5, mild: 10, moderate: 15, severe: 20 },
+            anxiety: { minimal: 5, mild: 10, moderate: 15, severe: 20 },
+            stress: { minimal: 8, mild: 15, moderate: 25, severe: 35 },
+            wellbeing: { low: 15, moderate: 25, high: 35, excellent: 45 }
+          };
+          
+          const categorycutoffs = cutoffs[category] || cutoffs.depression;
+          let severity = 'minimal';
+          
+          if (category === 'wellbeing') {
+            if (rawScore >= categorycutoffs.excellent) severity = 'excellent';
+            else if (rawScore >= categorycutoffs.high) severity = 'high';
+            else if (rawScore >= categorycutoffs.moderate) severity = 'moderate';
+            else severity = 'low';
+          } else {
+            if (rawScore >= categorycutoffs.severe) severity = 'severe';
+            else if (rawScore >= categorycutoffs.moderate) severity = 'moderate';
+            else if (rawScore >= categoryCutoffs.mild) severity = 'mild';
+            else severity = 'minimal';
+          }
+          
+          return {
+            raw: rawScore,
+            severity: severity,
+            percentile: this.calculatePercentile(category, rawScore)
+          };
+        }
+
+        calculatePercentile(category, score) {
+          // Simplified percentile calculation - in production, use normative data
+          const maxScores = { depression: 27, anxiety: 21, stress: 42, wellbeing: 70 };
+          return Math.min(100, Math.round((score / maxScores[category]) * 100));
+        }
+
+        updateNavigation(index) {
+          document.getElementById('prev-btn').style.display = index > 0 ? 'block' : 'none';
+          document.getElementById('skip-btn').style.display = 'block';
+          document.getElementById('next-btn').style.display = this.responses[index] ? 'block' : 'none';
+        }
+
+        updateSpeechBubble(message) {
+          const bubble = document.getElementById('assessment-speech');
+          if (bubble) {
+            bubble.style.opacity = '0';
+            setTimeout(() => {
+              bubble.textContent = message;
+              bubble.style.opacity = '1';
+            }, 300);
+          }
+        }
+
+        previousQuestion() {
+          if (this.currentQuestion > 0) {
+            this.currentQuestion--;
+            this.showQuestion(this.currentQuestion);
+          }
+        }
+
+        nextQuestion() {
+          if (this.currentQuestion < this.questions.length - 1 && this.responses[this.currentQuestion]) {
+            this.currentQuestion++;
+            this.showQuestion(this.currentQuestion);
+          }
+        }
+
+        skipQuestion() {
+          if (this.currentQuestion < this.questions.length - 1) {
+            this.currentQuestion++;
+            this.showQuestion(this.currentQuestion);
+          } else {
+            this.completeAssessment();
+          }
+        }
+
+        completeAssessment() {
+          this.endTime = new Date();
+          this.showResults();
+        }
+
+        showResults() {
+          document.getElementById('assessment-container').style.display = 'none';
+          document.getElementById('results-container').style.display = 'block';
+          
+          // Set completion metadata
+          document.getElementById('completion-time').textContent = new Date().toLocaleString();
+          document.getElementById('session-id').textContent = this.sessionId;
+          
+          this.renderResults();
+          this.updateSpeechBubble("Your professional assessment is complete. Here's your comprehensive mental wellness profile based on clinical standards.");
+        }
+
+        renderResults() {
+          const container = document.getElementById('results-content');
+          
+          container.innerHTML = `
+            <div class="results-overview card">
+              <h2>Assessment Overview</h2>
+              <div class="score-grid">
+                ${Object.entries(this.scores).map(([category, data]) => 
+                  `<div class="score-card ${data.severity}">
+                     <h3>${category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                     <div class="score-value">${data.raw}</div>
+                     <div class="severity-level">${data.severity.toUpperCase()}</div>
+                     <div class="percentile">${data.percentile}th percentile</div>
+                   </div>`
+                ).join('')}
+              </div>
+            </div>
+            
+            <div class="clinical-recommendations card">
+              <h2>Clinical Recommendations</h2>
+              <div class="recommendations">
+                ${this.generateRecommendations()}
+              </div>
+            </div>
+            
+            <div class="crisis-resources card">
+              <h2>Crisis Resources</h2>
+              <div class="emergency-contacts">
+                <div class="contact-item">
+                  <strong>National Suicide Prevention Lifeline:</strong>
+                  <a href="tel:988">988</a>
+                </div>
+                <div class="contact-item">
+                  <strong>Crisis Text Line:</strong>
+                  Text HOME to <a href="sms:741741">741741</a>
+                </div>
+                <div class="contact-item">
+                  <strong>Emergency Services:</strong>
+                  <a href="tel:911">911</a>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        generateRecommendations() {
+          const recommendations = [];
+          
+          if (this.scores.depression.severity !== 'minimal') {
+            recommendations.push("Consider scheduling an appointment with a mental health professional for depression screening");
+            recommendations.push("Maintain regular sleep schedule and engage in daily physical activity");
+          }
+          
+          if (this.scores.anxiety.severity !== 'minimal') {
+            recommendations.push("Practice evidence-based anxiety management techniques such as deep breathing and mindfulness");
+            recommendations.push("Consider cognitive-behavioral therapy (CBT) for anxiety management");
+          }
+          
+          recommendations.push("Continue monitoring your mental health with regular self-assessments");
+          recommendations.push("Maintain social connections and engage in meaningful activities");
+          
+          return `<ul>${recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>`;
+        }
+
+        saveProgress() {
+          const progressData = {
+            sessionId: this.sessionId,
+            responses: this.responses,
+            currentQuestion: this.currentQuestion,
+            timestamp: new Date()
+          };
+          localStorage.setItem('therafish_progress', JSON.stringify(progressData));
+        }
+
+        generateReport() {
+          // Implementation for PDF generation would go here
+          alert('PDF report generation feature coming soon. Your results have been saved to your session.');
+        }
+
+        shareResults() {
+          // Implementation for sharing with healthcare providers
+          alert('Provider sharing feature coming soon. Your session ID is: ' + this.sessionId);
+        }
+
+        restartAssessment() {
+          this.currentQuestion = 0;
+          this.responses = [];
+          this.scores = {
+            depression: { raw: 0, percentile: 0, severity: 'minimal' },
+            anxiety: { raw: 0, percentile: 0, severity: 'minimal' },
+            stress: { raw: 0, percentile: 0, severity: 'minimal' },
+            wellbeing: { raw: 0, percentile: 0, level: 'high' }
+          };
+          this.sessionId = this.generateSessionId();
+          document.getElementById('results-container').style.display = 'none';
+          document.getElementById('start-screen').style.display = 'block';
+        }
+      }
+
+             // Initialize the assessment system
+       const assessment = new TherafishAssessment();
+       
+       // Make assessment globally available
+       window.assessment = assessment;
+
+      // Global functions for backward compatibility
+      function startAssessment() {
+        assessment.startAssessment();
+      }
+
+      function previousQuestion() {
+        assessment.previousQuestion();
+      }
+
+      function nextQuestion() {
+        assessment.nextQuestion();
+      }
+
+      function skipQuestion() {
+        assessment.skipQuestion();
+      }
+
+      function generateReport() {
+        assessment.generateReport();
+      }
+
+      function shareResults() {
+        assessment.shareResults();
+      }
+
+      function restartAssessment() {
+        assessment.restartAssessment();
+      }
+
+                                         // Real Fish Market Data Integration
+         class TFSEMarketData {
+           constructor() {
+             this.fishData = {
+               'SALM': { 
+                 name: 'Atlantic Salmon (Therapeutic Grade)',
+                 basePrice: 12.85, 
+                 volatility: 0.15, 
+                 trend: 0.02,
+                 volume: 2400000,
+                 lastUpdate: Date.now()
+               },
+               'TCOD': { 
+                 name: 'Pacific Cod (Anxiety Relief)',
+                 basePrice: 8.42, 
+                 volatility: 0.12, 
+                 trend: -0.01,
+                 volume: 1800000,
+                 lastUpdate: Date.now()
+               },
+               'MMAC': { 
+                 name: 'Atlantic Mackerel (Mindfulness)',
+                 basePrice: 15.67, 
+                 volatility: 0.18, 
+                 trend: 0.03,
+                 volume: 3100000,
+                 lastUpdate: Date.now()
+               },
+               'YFTUNA': { 
+                 name: 'Yellowfin Tuna (Premium Therapy)',
+                 basePrice: 18.33, 
+                 volatility: 0.20, 
+                 trend: 0.04,
+                 volume: 4700000,
+                 lastUpdate: Date.now()
+               },
+               'HALI': { 
+                 name: 'Pacific Halibut (Stress Relief)',
+                 basePrice: 24.12, 
+                 volatility: 0.25, 
+                 trend: -0.02,
+                 volume: 1200000,
+                 lastUpdate: Date.now()
+               },
+               'RTRT': { 
+                 name: 'Rainbow Trout (Organic)',
+                 basePrice: 11.45, 
+                 volatility: 0.10, 
+                 trend: 0.01,
+                 volume: 900000,
+                 lastUpdate: Date.now()
+               }
+             };
+             this.marketCap = 247800000000; // $247.8B
+             this.tfseIndex = 1847.25;
+             this.indexChange = 24.8;
+             this.updateMarketTime();
+           }
+
+           async fetchRealSeafoodPrices() {
+             // Simulated API call to real seafood market data
+             // In production, this would connect to:
+             // - NOAA Fisheries Market Data
+             // - Boston Fish Pier pricing
+             // - Fulton Fish Market quotes
+             // - Alaska Seafood Marketing Institute data
+             
+             try {
+               // Simulate realistic market data based on actual seafood price patterns
+               const marketFactors = {
+                 seasonality: this.getSeasonalityFactor(),
+                 demand: this.getDemandFactor(),
+                 supply: this.getSupplyFactor(),
+                 oilPrices: this.getOilPriceFactor(),
+                 weather: this.getWeatherFactor()
+               };
+
+               Object.keys(this.fishData).forEach(symbol => {
+                 const fish = this.fishData[symbol];
+                 const marketImpact = this.calculateMarketImpact(marketFactors, symbol);
+                 fish.currentPrice = this.calculateNewPrice(fish, marketImpact);
+                 fish.change = fish.currentPrice - fish.basePrice;
+                 fish.changePercent = (fish.change / fish.basePrice) * 100;
+                 fish.volume = this.updateVolume(fish);
+               });
+
+               console.log('🐟 TFSE Market Data Updated from Real Seafood Markets');
+               return true;
+             } catch (error) {
+               console.error('Market data update failed:', error);
+               return false;
+             }
+           }
+
+           getSeasonalityFactor() {
+             const month = new Date().getMonth();
+             // Summer months typically see higher salmon prices
+             return month >= 5 && month <= 8 ? 1.1 : 0.95;
+           }
+
+           getDemandFactor() {
+             // Mental health awareness increases therapy fish demand
+             return 1 + (Math.random() * 0.1 - 0.05); // ±5%
+           }
+
+           getSupplyFactor() {
+             // Ocean conditions affect supply
+             return 1 + (Math.random() * 0.15 - 0.075); // ±7.5%
+           }
+
+           getOilPriceFactor() {
+             // Fuel costs affect fishing vessel operations
+             return 1 + (Math.random() * 0.08 - 0.04); // ±4%
+           }
+
+           getWeatherFactor() {
+             // Weather affects fishing conditions
+             return 1 + (Math.random() * 0.12 - 0.06); // ±6%
+           }
+
+           calculateMarketImpact(factors, symbol) {
+             const baseImpact = (factors.seasonality + factors.demand + factors.supply + 
+                               factors.oilPrices + factors.weather) / 5;
+             
+             // Add symbol-specific factors
+             const symbolMultiplier = this.getSymbolMultiplier(symbol);
+             return baseImpact * symbolMultiplier;
+           }
+
+           getSymbolMultiplier(symbol) {
+             const multipliers = {
+               'SALM': 1.2,    // Premium therapeutic salmon
+               'YFTUNA': 1.15, // High-value premium therapy
+               'HALI': 1.1,    // Large fish, premium pricing
+               'MMAC': 1.0,    // Standard therapeutic grade
+               'TCOD': 0.95,   // More common, stable pricing
+               'RTRT': 0.9     // Farm-raised, more stable
+             };
+             return multipliers[symbol] || 1.0;
+           }
+
+           calculateNewPrice(fish, marketImpact) {
+             const randomNoise = (Math.random() - 0.5) * fish.volatility;
+             const trendImpact = fish.trend * (0.5 + Math.random() * 0.5);
+             const totalChange = (marketImpact - 1) + randomNoise + trendImpact;
+             
+             const newPrice = fish.basePrice * (1 + totalChange);
+             return Math.max(0.50, newPrice);
+           }
+
+           updateVolume(fish) {
+             const volumeChange = (Math.random() - 0.5) * 0.3; // ±15%
+             return Math.round(fish.volume * (1 + volumeChange));
+           }
+
+           formatVolume(volume) {
+             if (volume >= 1000000) {
+               return (volume / 1000000).toFixed(1) + 'M';
+             } else if (volume >= 1000) {
+               return (volume / 1000).toFixed(0) + 'K';
+             }
+             return volume.toString();
+           }
+
+           updateMarketTime() {
+             const now = new Date();
+             const marketTime = now.toLocaleTimeString('en-US', {
+               timeZone: 'America/New_York',
+               hour12: true,
+               hour: 'numeric',
+               minute: '2-digit'
+             });
+             document.getElementById('market-time').textContent = `EST ${marketTime}`;
+           }
+
+           updateDisplay() {
+             Object.keys(this.fishData).forEach(symbol => {
+               const fish = this.fishData[symbol];
+               const tiles = document.querySelectorAll(`[data-symbol="${symbol}"]`);
+               
+               tiles.forEach(tile => {
+                 const priceElement = tile.querySelector('.tile-price');
+                 const changeElement = tile.querySelector('.tile-change');
+                 const volumeElement = tile.querySelector('.volume');
+
+                 // Update price
+                 priceElement.textContent = `$${fish.currentPrice.toFixed(2)}`;
+                 
+                 // Update change
+                 const changeSign = fish.change >= 0 ? '+' : '';
+                 changeElement.textContent = `${changeSign}$${Math.abs(fish.change).toFixed(2)} (${changeSign}${fish.changePercent.toFixed(2)}%)`;
+                 
+                 // Update volume
+                 volumeElement.textContent = `Vol: ${this.formatVolume(fish.volume)}`;
+                 
+                 // Update styling
+                 const changeClass = fish.change > 0 ? 'positive' : fish.change < 0 ? 'negative' : 'neutral';
+                 changeElement.className = `tile-change ${changeClass}`;
+
+                 // Add flash effect for significant changes (only on first tile to avoid duplicate effects)
+                 if (Math.abs(fish.changePercent) > 2 && tile === tiles[0]) {
+                   tiles.forEach(t => {
+                     t.style.borderColor = fish.change > 0 ? '#10b981' : '#ef4444';
+                     t.style.boxShadow = `0 0 20px ${fish.change > 0 ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`;
+                   });
+                   setTimeout(() => {
+                     tiles.forEach(t => {
+                       t.style.borderColor = '';
+                       t.style.boxShadow = '';
+                     });
+                   }, 2000);
+                 }
+               });
+             });
+
+             // Update market summary in header
+             this.updateMarketSummary();
+           }
+
+           updateMarketSummary() {
+             const avgChange = Object.values(this.fishData).reduce((sum, fish) => sum + fish.changePercent, 0) / Object.keys(this.fishData).length;
+             
+             // Update TFSE Index in header
+             const indexValue = this.tfseIndex * (1 + avgChange / 100);
+             const indexChangeValue = indexValue - this.tfseIndex;
+             
+             document.getElementById('tfse-index-mini').textContent = indexValue.toFixed(2);
+             const indexChangeElement = document.getElementById('index-change-mini');
+             const indexSign = indexChangeValue >= 0 ? '+' : '';
+             indexChangeElement.textContent = `${indexSign}${indexChangeValue.toFixed(1)}`;
+             indexChangeElement.className = `index-change ${indexChangeValue >= 0 ? 'positive' : 'negative'}`;
+           }
+         }
+
+         // Initialize TFSE Market System
+         const tfseMarket = new TFSEMarketData();
+
+         // Update market data every 15 seconds
+         setInterval(async () => {
+           await tfseMarket.fetchRealSeafoodPrices();
+           tfseMarket.updateDisplay();
+           tfseMarket.updateMarketTime();
+         }, 15000);
+
+         // Initial update
+         tfseMarket.fetchRealSeafoodPrices().then(() => {
+           tfseMarket.updateDisplay();
+         });
+
+       // Therafish animation and speech system
+       setInterval(() => {
+         const bubbles = document.querySelectorAll('.speech-bubble');
+         bubbles.forEach(bubble => {
+           if (bubble.style.display !== 'none') {
+             const encouragements = [
+               "You're doing excellent work! 🐟",
+               "Remember, this assessment is confidential and secure.",
+               "Take your time - there's no rush with these questions.",
+               "Your honest responses help create the most accurate assessment.",
+               "Mental health matters - you're taking an important step! 💙",
+               "Our ethically-sourced Therafish are here to help! 🌊"
+             ];
+             
+             // Occasionally show encouraging messages
+             if (Math.random() < 0.1) {
+               const originalText = bubble.textContent;
+               bubble.textContent = encouragements[Math.floor(Math.random() * encouragements.length)];
+               setTimeout(() => {
+                 bubble.textContent = originalText;
+               }, 3000);
+             }
+           }
+         });
+       }, 10000);
+    </script>
+  </body>
+</html>
